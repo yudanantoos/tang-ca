@@ -16,13 +16,10 @@ A simple application written in Flutter to note your overtime work (OT)
 
 ## Screenshots
 
-![Tang caaa](screenshots/1.png)
-
-![Tang caaa](screenshots/2.png)
-
-![Tang caaa](screenshots/3.png)
-
-![Tang caaa](screenshots/4.png)
+<img src="screenshots/1.png" width="500">
+<img src="screenshots/2.png" width="500">
+<img src="screenshots/3.png" width="500">
+<img src="screenshots/4.png" width="500">
 
 ## Author
 
