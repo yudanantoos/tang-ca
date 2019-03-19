@@ -1,12 +1,28 @@
 # Flutter Starter
 
-A lightweight, scalable flutter project for start developing app using BloC pattern
+A simple application written in Flutter to note your overtime work (OT)
 
-## What's inside?
+## Features
 
-- Base folder structure which can easily scalable
-- Included some libs that every app needs: `shared_preferences` for storing key-value pair data, `connectivity` for getting network state and `flutter_bloc` for managing app state
-- A counter example with BloC pattern
+- Base on [Flutter Starter](https://github.com/scitbiz/flutter-starter) with basic structure and scalable
+
+- Using BloC pattern
+
+- Simple, nice UI design
+
+- Form validator example
+
+- Swipe to dismiss example
+
+## Screenshots
+
+![Tang caaa](screenshots/1.png)
+
+![Tang caaa](screenshots/2.png)
+
+![Tang caaa](screenshots/3.png)
+
+![Tang caaa](screenshots/4.png)
 
 ## Author
 
@@ -14,4 +30,4 @@ A lightweight, scalable flutter project for start developing app using BloC patt
 
 ## Bugs/Requests
 
-- If you encounter any problems feel free to open an issue. If you feel the library is missing a feature, please raise a ticket on Github. Pull request are also welcome.
+- If you encounter any problems feel free to open an issue. If you feel the project is missing a feature, please raise a ticket on Github. Pull request are also welcome.
