@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:starter/configs/styles.dart';
 import 'package:starter/models/slot.dart';
 
 class SlotItem extends ListTile {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:starter/blocs/slot_bloc/slot.dart';
-import 'package:starter/configs/styles.dart';
+import 'package:starter/blocs/slots/slots.dart';
 import 'package:starter/routes.dart';
 
 void main() => runApp(TangCa());
@@ -12,7 +11,7 @@ class TangCa extends StatefulWidget {
 }
 
 class _TangCaState extends State<TangCa> {
-  final _bloc = SlotBloc();
+  final _bloc = SlotsBloc();
 
   @override
   void initState() {
@@ -30,7 +29,7 @@ class _TangCaState extends State<TangCa> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<SlotBloc>(
+    return BlocProvider<SlotsBloc>(
       bloc: _bloc,
       child: MaterialApp(
         title: 'Flutter Starter',

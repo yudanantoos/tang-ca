@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:starter/blocs/slot_bloc/slot.dart';
+import 'package:starter/blocs/slots/slots.dart';
 import 'package:starter/models/slot.dart';
 import 'package:starter/routes.dart';
+import 'package:starter/screens/home/widgets/filter.dart';
+import 'package:starter/models/sort_type.dart';
 import 'package:starter/screens/home/widgets/slot_item.dart';
 
 class Home extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   BuildContext _context;
-  SlotBloc _bloc;
+  SlotsBloc _bloc;
+
+  void _onSort(SortType type) {
+    _bloc.dispatch(ApplySort(type));
+  }
 
   void _onSlotTap(Slot slot) {
     Router.of(_context).push(Routes.slotDetail, arguments: {"slot": slot});
@@ -32,13 +38,18 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _context = context;
-    _bloc = SlotBloc.of(context);
+    _bloc = SlotsBloc.of(context);
 
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text("Tăng Caaaa"),
         centerTitle: true,
+        actions: <Widget>[
+          Sort(
+            onSelected: _onSort,
+          ),
+        ],
       ),
       body: Container(
         child: BlocBuilder(
@@ -53,7 +64,7 @@ class Home extends StatelessWidget {
     );
   }
 
-  Widget _buildSlotList(BuildContext context, SlotState state) {
+  Widget _buildSlotList(BuildContext context, SlotsState state) {
     switch (state.runtimeType) {
       case SlotsLoading:
         return Center(
@@ -61,8 +72,7 @@ class Home extends StatelessWidget {
         );
 
       case SlotsLoaded:
-        final slots = (state as SlotsLoaded).slots
-          ..sort((a, b) => a.date.isBefore(b.date) || a.from.isBefore(b.from) ? -1 : 1);
+        final slots = (state as SlotsLoaded).slots;
 
         return ListView.builder(
           itemCount: slots.length,

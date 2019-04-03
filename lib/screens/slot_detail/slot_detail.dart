@@ -1,11 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:starter/blocs/slot_bloc/slot.dart';
+import 'package:starter/blocs/slots/slots.dart';
 import 'package:starter/models/slot.dart';
 import 'package:starter/routes.dart';
-import 'package:starter/screens/home/widgets/spacing.dart';
+import 'package:starter/widgets/spacing.dart';
 import 'package:starter/widgets/button.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+
+DateTime _getDateTime(DateTime date, DateTime time) {
+  if (date == null) {
+    return time;
+  }
+
+  if (time == null) {
+    return null;
+  }
+
+  return DateTime(date.year, date.month, date.day, time.hour, time.minute, 0, 0);
+}
 
 class SlotDetail extends StatefulWidget {
   final Slot slot;
@@ -21,7 +33,7 @@ class _SlotDetailState extends State<SlotDetail> {
 
   bool _isValid = false;
   String _description;
-  DateTime _date;
+  DateTime _date = DateTime.now();
   DateTime _fromTime;
   DateTime _toTime;
 
@@ -33,7 +45,7 @@ class _SlotDetailState extends State<SlotDetail> {
     if (_isUpdate) {
       setState(() {
         _description = _slot.description;
-        _date = _slot.date;
+        _date = _slot.from;
         _fromTime = _slot.from;
         _toTime = _slot.to;
         _isValid = true;
@@ -50,15 +62,14 @@ class _SlotDetailState extends State<SlotDetail> {
       final slot = Slot(
         id: _isUpdate ? _slot.id : null,
         description: _description,
-        date: _date,
-        from: _fromTime,
-        to: _toTime,
+        from: _getDateTime(_date, _fromTime),
+        to: _getDateTime(_date, _toTime),
       );
 
       if (_isUpdate) {
-        SlotBloc.of(context).dispatch(UpdateSlot(slot));
+        SlotsBloc.of(context).dispatch(UpdateSlot(slot));
       } else {
-        SlotBloc.of(context).dispatch(AddSlot(slot));
+        SlotsBloc.of(context).dispatch(AddSlot(slot));
       }
 
       Router.of(context).pop();
@@ -99,7 +110,7 @@ class _SlotDetailState extends State<SlotDetail> {
           DateTimePickerFormField(
             format: DateFormat("dd/MM/yyyy"),
             inputType: InputType.date,
-            initialValue: _date ?? DateTime.now(),
+            initialValue: _date,
             editable: false,
             decoration: InputDecoration(
               border: OutlineInputBorder(),
@@ -121,13 +132,13 @@ class _SlotDetailState extends State<SlotDetail> {
                 child: DateTimePickerFormField(
                   format: DateFormat("HH:mm"),
                   inputType: InputType.time,
-                  initialValue: _fromTime ?? DateTime.now(),
+                  initialValue: _fromTime,
                   editable: false,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: "Từ",
                   ),
-                  onSaved: (DateTime date) => _fromTime = date,
+                  onSaved: (DateTime time) => _fromTime = time,
                   validator: (DateTime time) {
                     if (time == null) {
                       return "Giờ không được trống";
@@ -140,17 +151,13 @@ class _SlotDetailState extends State<SlotDetail> {
                 child: DateTimePickerFormField(
                   format: DateFormat("HH:mm"),
                   inputType: InputType.time,
-                  initialValue: _toTime ?? null,
+                  initialValue: _toTime,
                   editable: false,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: "Đến",
                   ),
-                  onSaved: (DateTime time) {
-                    if (_formKey.currentState.validate()) {
-                      _toTime = time;
-                    }
-                  },
+                  onSaved: (DateTime time) => _toTime = time,
                   validator: (DateTime time) {
                     if (time == null) {
                       return "Giờ không được trống";

@@ -20,9 +20,6 @@ class _$SlotSerializer implements StructuredSerializer<Slot> {
     final result = <Object>[
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(int)),
-      'date',
-      serializers.serialize(object.date,
-          specifiedType: const FullType(DateTime)),
       'from',
       serializers.serialize(object.from,
           specifiedType: const FullType(DateTime)),
@@ -51,10 +48,6 @@ class _$SlotSerializer implements StructuredSerializer<Slot> {
           result.id = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
-        case 'date':
-          result.date = serializers.deserialize(value,
-              specifiedType: const FullType(DateTime)) as DateTime;
-          break;
         case 'from':
           result.from = serializers.deserialize(value,
               specifiedType: const FullType(DateTime)) as DateTime;
@@ -78,8 +71,6 @@ class _$Slot extends Slot {
   @override
   final int id;
   @override
-  final DateTime date;
-  @override
   final DateTime from;
   @override
   final DateTime to;
@@ -89,13 +80,9 @@ class _$Slot extends Slot {
   factory _$Slot([void updates(SlotBuilder b)]) =>
       (new SlotBuilder()..update(updates)).build();
 
-  _$Slot._({this.id, this.date, this.from, this.to, this.description})
-      : super._() {
+  _$Slot._({this.id, this.from, this.to, this.description}) : super._() {
     if (id == null) {
       throw new BuiltValueNullFieldError('Slot', 'id');
-    }
-    if (date == null) {
-      throw new BuiltValueNullFieldError('Slot', 'date');
     }
     if (from == null) {
       throw new BuiltValueNullFieldError('Slot', 'from');
@@ -120,7 +107,6 @@ class _$Slot extends Slot {
     if (identical(other, this)) return true;
     return other is Slot &&
         id == other.id &&
-        date == other.date &&
         from == other.from &&
         to == other.to &&
         description == other.description;
@@ -128,9 +114,7 @@ class _$Slot extends Slot {
 
   @override
   int get hashCode {
-    return $jf($jc(
-        $jc($jc($jc($jc(0, id.hashCode), date.hashCode), from.hashCode),
-            to.hashCode),
+    return $jf($jc($jc($jc($jc(0, id.hashCode), from.hashCode), to.hashCode),
         description.hashCode));
   }
 
@@ -138,7 +122,6 @@ class _$Slot extends Slot {
   String toString() {
     return (newBuiltValueToStringHelper('Slot')
           ..add('id', id)
-          ..add('date', date)
           ..add('from', from)
           ..add('to', to)
           ..add('description', description))
@@ -152,10 +135,6 @@ class SlotBuilder implements Builder<Slot, SlotBuilder> {
   int _id;
   int get id => _$this._id;
   set id(int id) => _$this._id = id;
-
-  DateTime _date;
-  DateTime get date => _$this._date;
-  set date(DateTime date) => _$this._date = date;
 
   DateTime _from;
   DateTime get from => _$this._from;
@@ -174,7 +153,6 @@ class SlotBuilder implements Builder<Slot, SlotBuilder> {
   SlotBuilder get _$this {
     if (_$v != null) {
       _id = _$v.id;
-      _date = _$v.date;
       _from = _$v.from;
       _to = _$v.to;
       _description = _$v.description;
@@ -199,8 +177,7 @@ class SlotBuilder implements Builder<Slot, SlotBuilder> {
   @override
   _$Slot build() {
     final _$result = _$v ??
-        new _$Slot._(
-            id: id, date: date, from: from, to: to, description: description);
+        new _$Slot._(id: id, from: from, to: to, description: description);
     replace(_$result);
     return _$result;
   }
